@@ -1,7 +1,6 @@
 package com.roysten.flixter;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_app_bar_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         RecyclerView rvMovies = findViewById(R.id.rvMovies);
         moviesList = new ArrayList<>();
 
@@ -49,26 +53,24 @@ public class MainActivity extends AppCompatActivity {
         asyncHttpClient.get(NOW_PLAYING_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
+                //Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
                 try {
                     JSONArray results = jsonObject.getJSONArray("results");
-                    Log.i(TAG, "JSON Movie Now Playing Results: " + results.toString());
-                    Log.i(TAG, "Movies Count: " + moviesList.size());
+                    //Log.i(TAG, "JSON Movie Now Playing Results: " + results.toString());
+                    //Log.i(TAG, "Movies Count: " + moviesList.size());
                     moviesList.addAll(Movie.fromJsonArray(results));
                     movieAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
-                    Log.e(TAG, "JSON Exception Occurred!", e);
+                    //Log.e(TAG, "JSON Exception Occurred!", e);
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
+                //Log.d(TAG, "onFailure");
             }
         });
     }
