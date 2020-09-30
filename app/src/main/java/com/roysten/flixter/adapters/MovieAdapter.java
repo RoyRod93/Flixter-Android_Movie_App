@@ -1,19 +1,24 @@
 package com.roysten.flixter.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.roysten.flixter.DetailActivity;
 import com.roysten.flixter.R;
 import com.roysten.flixter.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -47,6 +52,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        RelativeLayout moviesContainer;
         TextView tvMovieTitle, tvMovieOverview;
         ImageView ivMoviePoster;
 
@@ -55,9 +61,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvMovieTitle = itemView.findViewById(R.id.tvMovieTitle);
             tvMovieOverview = itemView.findViewById(R.id.tvMovieOverView);
             ivMoviePoster = itemView.findViewById(R.id.ivMoviePoster);
+            moviesContainer = itemView.findViewById(R.id.movie_container);
         }
 
-        public void bind(Movie movie) {
+        public void bind(final Movie movie) {
             tvMovieTitle.setText(movie.getMovieTitle());
             tvMovieOverview.setText(movie.getMovieOverview());
 
@@ -74,6 +81,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     .error(R.drawable.image_not_found)
                     .override(370, 550)
                     .into(ivMoviePoster);
+
+            moviesContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("movieObj", Parcels.wrap(movie));
+                    context.startActivity(intent);
+                }
+            });
 
         }
     }
