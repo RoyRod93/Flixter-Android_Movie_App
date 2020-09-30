@@ -2,10 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@android:color/black"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     android:orientation="vertical"
     tools:context=".DetailActivity">
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/ytPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="2dp" />
 
     <TextView
         android:id="@+id/tvDetailsTitle"
@@ -13,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textColor="@android:color/white"
-        android:textSize="30sp"
+        android:textSize="35sp"
+        android:textStyle="bold"
         tools:text="Mulan" />
 
     <RatingBar
@@ -21,22 +30,27 @@
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_margin="5dp"
-        android:layout_gravity="center"
-        android:background="@android:color/holo_red_dark"
+        android:layout_gravity="left"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:isIndicator="true"
         android:numStars="10"
+        android:padding="5dp"
         android:rating="5.5" />
 
     <TextView
         android:id="@+id/tvDetailsOverView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="5dp"
         android:justificationMode="inter_word"
+        android:padding="2dp"
         android:textAlignment="gravity"
         android:textColor="@android:color/white"
+        android:textSize="18sp"
         tools:text="When the Emperor of China issues a decree that one man per family must serve in the Imperial Chinese Army to defend the country from Huns, Hua Mulan, the eldest daughter of an honored warrior, steps in to take the place of her ailing father. She is spirited, determined and quick on her feet. Disguised as a man by the name of Hua Jun, she is tested every step of the way and must harness her innermost strength and embrace her true potential." />
 
 
