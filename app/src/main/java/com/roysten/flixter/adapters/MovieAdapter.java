@@ -1,5 +1,6 @@
 package com.roysten.flixter.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +24,8 @@ import com.roysten.flixter.models.Movie;
 import org.parceler.Parcels;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
@@ -75,19 +80,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 backdropImgUrl = movie.getPosterPath();
             }
 
+
+            int radius = 25; // corner radius, higher value = more rounded
+            int margin = 5; // crop margin, set to 0 for corners with no crop
             Glide.with(context)
                     .load(backdropImgUrl)
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.image_not_found)
-                    .override(370, 550)
+                    .override(370, 580)
+                    .transform(new RoundedCornersTransformation(radius, margin))
                     .into(ivMoviePoster);
+
 
             moviesContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, DetailActivity.class);
                     intent.putExtra("movieObj", Parcels.wrap(movie));
-                    context.startActivity(intent);
+                    Pair<View, String> p1 = Pair.create((View) tvMovieTitle, "titleTransit");
+                    Pair<View, String> p2 = Pair.create((View) tvMovieOverview, "overviewTransit");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation((Activity) context, p1, p2);
+                    context.startActivity(intent, options.toBundle());
+
                 }
             });
 

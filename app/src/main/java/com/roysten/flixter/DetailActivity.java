@@ -22,7 +22,7 @@ public class DetailActivity extends YouTubeBaseActivity {
 
     public static final String VIDEOS_URL = "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
-    TextView tvTitle, tvOverview;
+    TextView tvTitle, tvOverview, tvPopularity;
     RatingBar ratingBar;
     YouTubePlayerView youTubePlayerView;
 
@@ -35,11 +35,13 @@ public class DetailActivity extends YouTubeBaseActivity {
         tvOverview = findViewById(R.id.tvDetailsOverView);
         ratingBar = findViewById(R.id.ratingBar);
         youTubePlayerView = findViewById(R.id.ytPlayer);
+        tvPopularity = findViewById(R.id.tvPopularity);
 
-        Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movieObj"));
+        final Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movieObj"));
         tvTitle.setText(movie.getMovieTitle());
         tvOverview.setText(movie.getMovieOverview());
         ratingBar.setRating((float) movie.getRating());
+        tvPopularity.setText(String.valueOf(movie.getPopularity()));
 
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.get(String.format(VIDEOS_URL, movie.getMovieID()), new JsonHttpResponseHandler() {
@@ -51,7 +53,7 @@ public class DetailActivity extends YouTubeBaseActivity {
                         return;
                     }
                     String ytVideoKey = results.getJSONObject(0).getString("key");
-                    playYoutube(ytVideoKey);
+                    playYoutube(ytVideoKey, movie);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -65,12 +67,16 @@ public class DetailActivity extends YouTubeBaseActivity {
         });
     }
 
-    private void playYoutube(final String ytVideoKey) {
+    private void playYoutube(final String ytVideoKey, final Movie movie) {
 
         youTubePlayerView.initialize(getString(R.string.YT_API_KEY), new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.cueVideo(ytVideoKey);
+                if (movie.getPopularity() > 5.0) {
+                    youTubePlayer.loadVideo(ytVideoKey);
+                } else {
+                    youTubePlayer.cueVideo(ytVideoKey);
+                }
             }
 
             @Override
