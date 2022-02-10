@@ -7,7 +7,7 @@ Flixter is an android app that allows users to browse movies from the [The Movie
 - [x] Views should be responsive for both landscape/portrait mode.
 - [x] In portrait mode, the poster image, title, and movie overview is shown.
 - [x] In landscape mode, the rotated alternate layout should use the backdrop image instead and show the title and movie overview to the right of it.
-- [x] Display a nice default [placeholder graphic](https://guides.codepath.org/android/Displaying-Images-with-the-Glide-Library#advanced-usage) for each image during loading
+- [x] Display a nice default placeholder graphic for each image during loading
 - [x] Improved the user interface by experimenting with styling and coloring.
 - [x] Expose details of movie (ratings using RatingBar, popularity, and synopsis) in a separate activity.
 - [x] Allow video posts to be played in full-screen using the YouTubePlayerView.
