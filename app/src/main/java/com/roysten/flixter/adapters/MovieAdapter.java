@@ -99,9 +99,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                     intent.putExtra("movieObj", Parcels.wrap(movie));
                     Pair<View, String> p1 = Pair.create((View) tvMovieTitle, "titleTransit");
                     Pair<View, String> p2 = Pair.create((View) tvMovieOverview, "overviewTransit");
-                    ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation((Activity) context, p1, p2);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, p1, p2);
                     context.startActivity(intent, options.toBundle());
+
 
                 }
             });
